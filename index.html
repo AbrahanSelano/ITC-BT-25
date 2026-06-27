@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ITC-BT-25">
+<meta name="description" content="Características eléctricas de circuitos según ITC-BT-25 REBT">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>ITC-BT-25 — Circuitos REBT</title>
+<style>
+  :root {
+    --bg:       #0f172a;
+    --surface:  #1e293b;
+    --surface2: #273549;
+    --border:   #334155;
+    --accent:   #3b82f6;
+    --accent2:  #1d4ed8;
+    --text:     #f1f5f9;
+    --muted:    #94a3b8;
+    --green:    #22c55e;
+    --amber:    #f59e0b;
+    --red:      #ef4444;
+    --green-bg: #052e16;
+    --amber-bg: #451a03;
+    --blue-bg:  #1e3a5f;
+    --radius:   12px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bot: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+  /* ── Header ── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: calc(var(--safe-top) + 14px) 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-icon {
+    width: 36px; height: 36px;
+    background: var(--accent2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .header-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
+  .header-sub   { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  /* ── Selector ── */
+  .selector-wrap {
+    padding: 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .selector-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .circuit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .circuit-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text);
+    -webkit-user-select: none;
+  }
+  .circuit-btn:active { transform: scale(0.95); }
+  .circuit-btn.active {
+    background: var(--blue-bg);
+    border-color: var(--accent);
+  }
+  .circuit-btn .code {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+  .circuit-btn .name-short {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.3;
+    display: block;
+  }
+  .circuit-btn.active .name-short { color: #93c5fd; }
+
+  /* ── Content ── */
+  .content {
+    padding: 16px;
+    padding-bottom: calc(var(--safe-bot) + 24px);
+  }
+
+  /* Circuit hero */
+  .circuit-hero {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 18px 16px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .circuit-hero .big-code {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+  .circuit-hero .hero-right { flex: 1; }
+  .circuit-hero .hero-name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .circuit-hero .hero-norm {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface2);
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* Quick stats 2-col grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .stat-card.accent { border-color: var(--accent); background: var(--blue-bg); }
+  .stat-card.green  { border-color: var(--green);  background: var(--green-bg); }
+  .stat-card.amber  { border-color: var(--amber);  background: var(--amber-bg); }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .stat-card.accent .stat-label { color: #93c5fd; }
+  .stat-card.green  .stat-label { color: #86efac; }
+  .stat-card.amber  .stat-label { color: #fcd34d; }
+  .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+  }
+  .stat-unit {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 2px;
+  }
+  .stat-card.accent .stat-value { color: #93c5fd; }
+  .stat-card.green  .stat-value { color: #86efac; }
+  .stat-card.amber  .stat-value { color: #fcd34d; }
+
+  /* Detail rows */
+  .detail-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .detail-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .detail-icon {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .detail-label {
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .detail-val {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .pill-blue  { background: var(--blue-bg);  color: #93c5fd; border: 1px solid var(--accent); }
+  .pill-green { background: var(--green-bg); color: #86efac; border: 1px solid var(--green); }
+  .pill-amber { background: var(--amber-bg); color: #fcd34d; border: 1px solid var(--amber); }
+  .pill-gray  { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+  /* Notas */
+  .notes-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .note-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .note-item:last-child { border-bottom: none; }
+  .note-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--blue-bg);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 2px 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .note-text {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Potencia total banner */
+  .power-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #172554 100%);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .power-left { }
+  .power-label { font-size: 11px; color: #93c5fd; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .power-formula { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .power-value { font-size: 28px; font-weight: 800; color: #93c5fd; }
+  .power-unit  { font-size: 13px; color: #64748b; }
+
+  /* No data */
+  .no-data { color: #475569; font-style: italic; font-size: 13px; }
+
+  /* Install banner */
+  #install-banner {
+    display: none;
+    position: fixed;
+    bottom: calc(var(--safe-bot) + 16px);
+    left: 16px; right: 16px;
+    background: var(--accent2);
+    color: white;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  #install-banner .ib-text { flex: 1; font-size: 14px; font-weight: 500; }
+  #install-banner .ib-sub  { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+  #install-banner .ib-btn  { background: white; color: var(--accent2); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  #install-banner .ib-close { font-size: 20px; opacity: 0.7; padding: 4px; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-icon">⚡</div>
+  <div>
+    <div class="header-title">ITC-BT-25</div>
+    <div class="header-sub">Circuitos de vivienda · REBT</div>
+  </div>
+</div>
+
+<!-- Circuit selector -->
+<div class="selector-wrap">
+  <div class="selector-label">Selecciona el circuito</div>
+  <div class="circuit-grid" id="circuit-grid"></div>
+</div>
+
+<!-- Main content -->
+<div class="content" id="content"></div>
+
+<!-- Install banner -->
+<div id="install-banner">
+  <span class="ib-close" id="ib-close">✕</span>
+  <div class="ib-text">
+    <div>Instalar app</div>
+    <div class="ib-sub">Funciona sin internet</div>
+  </div>
+  <div class="ib-btn" id="ib-btn">Instalar</div>
+</div>
+
+<script>
+const CIRCUITS = {
+  C1:  {
+    nombre: 'Iluminación',
+    pot: 200, Fs: 0.75, Fu: 0.5,
+    toma: 'Punto de luz', IA: 10, pts: 30, sec: 1.5, tubo: 16,
+    notas: [
+      'Tensión considerada: 230 V entre fase y neutro.',
+      'El punto de luz incluirá conductor de protección.'
+    ]
+  },
+  C2:  {
+    nombre: 'Tomas de uso general',
+    pot: 3450, Fs: 0.2, Fu: 0.25,
+    toma: 'Base 16A 2p+T', IA: 16, pts: 20, sec: 2.5, tubo: 20,
+    notas: [
+      'Tensión considerada: 230 V entre fase y neutro.',
+      'Las bases de toma de corriente de 16A 2p+T serán fijas del tipo indicado en la figura C2a de la norma UNE 20315.'
+    ]
+  },
+  C3:  {
+    nombre: 'Cocina y horno',
+    pot: 5400, Fs: 0.5, Fu: 0.75,
+    toma: 'Base 25A 2p+T', IA: 25, pts: 2, sec: 6, tubo: 25,
+    notas: [
+      'La potencia máxima permisible por circuito será de 5.750 W.',
+      'Bases de 25A 2p+T según norma UNE 20315 (figura ESB 25-5A).'
+    ]
+  },
+  C4:  {
+    nombre: 'Lavadora, lavavajillas y termo eléctrico',
+    pot: 3450, Fs: 0.66, Fu: 0.75,
+    toma: 'Base 16A 2p+T', IA: 20, pts: 3, sec: 4, tubo: 20,
+    notas: [
+      'La potencia máxima permisible por circuito será de 2.300 W.',
+      'La sección de 4 mm² parte de una caja de derivación del circuito de 6 mm².',
+      'En este circuito cada toma individual puede conectarse mediante un conductor de 2,5 mm².',
+      'Pueden combinarse con fusibles o interruptores automáticos de 16 A.'
+    ]
+  },
+  C5:  {
+    nombre: 'Baño, cuarto de cocina',
+    pot: 3450, Fs: 0.4, Fu: 0.5,
+    toma: 'Base 16A 2p+T', IA: 16, pts: 6, sec: 2.5, tubo: 20,
+    notas: [
+      'La potencia máxima permisible por circuito será de 5.750 W.'
+    ]
+  },
+  C8:  {
+    nombre: 'Calefacción',
+    pot: null, Fs: null, Fu: null,
+    toma: '—', IA: 25, pts: null, sec: 6, tubo: 25,
+    notas: [
+      'Potencia según proyecto.',
+      'Los fusibles o interruptores automáticos no son necesarios si se dispone de circuitos independientes para cada aparato con interruptor automático de 16 A en cada circuito.'
+    ]
+  },
+  C9:  {
+    nombre: 'Aire acondicionado',
+    pot: null, Fs: null, Fu: null,
+    toma: '—', IA: 25, pts: null, sec: 6, tubo: 25,
+    notas: [
+      'Potencia según proyecto.',
+      'El desdoblamiento del circuito no supondrá el paso a electrificación elevada.'
+    ]
+  },
+  C10: {
+    nombre: 'Secadora',
+    pot: 3450, Fs: 1.0, Fu: 0.75,
+    toma: 'Base 16A 2p+T', IA: 16, pts: 1, sec: 2.5, tubo: 20,
+    notas: [
+      'Factor de simultaneidad 1,00 (aparato de uso individual).'
+    ]
+  },
+  C11: {
+    nombre: 'Automatización',
+    pot: null, Fs: null, Fu: null,
+    toma: '—', IA: 10, pts: null, sec: 1.5, tubo: 16,
+    notas: [
+      'Tensión considerada: 230 V entre fase y neutro.',
+      'El punto de luz incluirá conductor de protección.'
+    ]
+  }
+};
+
+const SHORT = {
+  C1:'Iluminación', C2:'Tomas', C3:'Cocina', C4:'Lavadora',
+  C5:'Baño', C8:'Calefacción', C9:'Aire acond.', C10:'Secadora', C11:'Automati.'
+};
+
+let selected = 'C1';
+
+function v(val, unit='') {
+  if (val === null || val === undefined) return '<span class="no-data">—</span>';
+  return `<strong>${val}</strong>${unit ? ' <span style="font-size:12px;color:var(--muted)">' + unit + '</span>' : ''}`;
+}
+
+function pill(val, type, unit='') {
+  if (val === null || val === undefined) return '<span class="no-data">—</span>';
+  return `<span class="pill pill-${type}">${val}${unit ? ' ' + unit : ''}</span>`;
+}
+
+function buildGrid() {
+  const grid = document.getElementById('circuit-grid');
+  grid.innerHTML = Object.keys(CIRCUITS).map(k => `
+    <button class="circuit-btn${k===selected?' active':''}" onclick="select('${k}')">
+      <span class="code">${k}</span>
+      <span class="name-short">${SHORT[k]}</span>
+    </button>
+  `).join('');
+}
+
+function buildContent() {
+  const d = CIRCUITS[selected];
+  const hasCalc = d.pot && d.Fs && d.Fu && d.pts;
+  const potTotal = hasCalc ? Math.round(d.pts * d.pot * d.Fs * d.Fu) : null;
+
+  let html = '';
+
+  // Hero
+  html += `
+  <div class="circuit-hero">
+    <div class="big-code">${selected}</div>
+    <div class="hero-right">
+      <div class="hero-name">${d.nombre}</div>
+      <span class="hero-norm">ITC-BT-25 · REBT</span>
+    </div>
+  </div>`;
+
+  // Quick stats row (IA + Sección)
+  html += `<div class="stats-grid">
+    <div class="stat-card accent">
+      <div class="stat-label">⚡ Interruptor automático</div>
+      <div class="stat-value">${d.IA}<span class="stat-unit">A</span></div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">🔌 Sección mínima</div>
+      <div class="stat-value">${d.sec}<span class="stat-unit">mm²</span></div>
+    </div>
+  </div>`;
+
+  // Potencia total banner (only when calculable)
+  if (hasCalc) {
+    html += `
+    <div class="power-banner">
+      <div class="power-left">
+        <div class="power-label">Potencia total estimada</div>
+        <div class="power-formula">${d.pts} tomas × ${d.pot} W × ${d.Fs} × ${d.Fu}</div>
+      </div>
+      <div>
+        <div class="power-value">${potTotal.toLocaleString('es-ES')}</div>
+        <div class="power-unit" style="text-align:right">W</div>
+      </div>
+    </div>`;
+  }
+
+  // Detail rows
+  html += `
+  <div class="detail-section">
+    <div class="detail-section-title">Características eléctricas</div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">🔋</div>
+        <span class="detail-label">Potencia por toma</span>
+      </div>
+      <div class="detail-val">${d.pot ? d.pot + ' W' : '<span class="no-data">Según proyecto</span>'}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">⚖️</div>
+        <span class="detail-label">Factor simultán. Fs</span>
+      </div>
+      <div class="detail-val">${d.Fs !== null ? d.Fs : '<span class="no-data">—</span>'}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">📊</div>
+        <span class="detail-label">Factor utilización Fu</span>
+      </div>
+      <div class="detail-val">${d.Fu !== null ? d.Fu : '<span class="no-data">—</span>'}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">🔌</div>
+        <span class="detail-label">Tipo de toma</span>
+      </div>
+      <div class="detail-val" style="font-size:13px">${d.toma}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">🔢</div>
+        <span class="detail-label">Máx. puntos/circuito</span>
+      </div>
+      <div class="detail-val">${d.pts !== null ? d.pts : '<span class="no-data">—</span>'}</div>
+    </div>
+  </div>`;
+
+  // Cable + tubo
+  html += `
+  <div class="detail-section">
+    <div class="detail-section-title">Cableado y conducción</div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">〰️</div>
+        <span class="detail-label">Sección conductores</span>
+      </div>
+      <div class="detail-val">${pill(d.sec, 'green', 'mm²')}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">⭕</div>
+        <span class="detail-label">Tubo / conducto Ø</span>
+      </div>
+      <div class="detail-val">${pill(d.tubo, 'amber', 'mm')}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-left">
+        <div class="detail-icon">🔒</div>
+        <span class="detail-label">Interruptor automático</span>
+      </div>
+      <div class="detail-val">${pill(d.IA, 'blue', 'A')}</div>
+    </div>
+  </div>`;
+
+  // Notas
+  if (d.notas && d.notas.length) {
+    html += `
+    <div class="notes-section">
+      <div class="detail-section-title">Notas ITC-BT-25</div>
+      ${d.notas.map((n,i) => `
+        <div class="note-item">
+          <span class="note-num">${i+1}</span>
+          <span class="note-text">${n}</span>
+        </div>`).join('')}
+    </div>`;
+  }
+
+  document.getElementById('content').innerHTML = html;
+}
+
+function select(key) {
+  selected = key;
+  buildGrid();
+  buildContent();
+}
+
+// Init
+buildGrid();
+buildContent();
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+// Install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').style.display = 'flex';
+});
+document.getElementById('ib-btn').addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      document.getElementById('install-banner').style.display = 'none';
+      deferredPrompt = null;
+    });
+  }
+});
+document.getElementById('ib-close').addEventListener('click', () => {
+  document.getElementById('install-banner').style.display = 'none';
+});
+</script>
+</body>
+</html>
