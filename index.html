@@ -248,12 +248,12 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 const CIRCUITS = {
   C1: {nombre:'Iluminación',pot:200,Fs:.75,Fu:.5,toma:'Punto de luz',IA:10,pts:30,sec:1.5,tubo:16,
     notas:['Tensión: 230 V entre fase y neutro.','El punto de luz incluirá conductor de protección.']},
-  C2: {nombre:'Tomas de uso general',pot:3450,Fs:.2,Fu:.25,toma:'Base 16A 2p+T',IA:16,pts:20,sec:2.5,tubo:20,
+  C2: {nombre:'Tomas de uso general + Frigorífico + Extractor',pot:3450,Fs:.2,Fu:.25,toma:'Base 16A 2p+T',IA:16,pts:20,sec:2.5,tubo:20,
     notas:['Bases 16A 2p+T fijas según figura C2a (UNE 20315).']},
   C3: {nombre:'Cocina y horno',pot:5400,Fs:.5,Fu:.75,toma:'Base 25A 2p+T',IA:25,pts:2,sec:6,tubo:25,
     notas:['Potencia máxima permisible: 5.750 W por circuito.','Bases 25A 2p+T según UNE 20315.']},
   C4: {nombre:'Lavadora, lavavajillas y termo',pot:3450,Fs:.66,Fu:.75,toma:'Base 16A 2p+T',IA:20,pts:3,sec:4,tubo:20,
-    notas:['Potencia máxima: 2.300 W por circuito.','Sección 4 mm² parte de caja de derivación de 6 mm².','Cada toma puede conectarse con conductor de 2,5 mm².']},
+    notas:['Potencia máxima: 2.300 W por circuito.','1 Magnetotérmico con cables de 4 mm² + Fusibles.','Cada toma puede conectarse con 3 magnetotérmicos de 16A y cable de 2,5 mm².']},
   C5: {nombre:'Baño, cuarto de cocina',pot:3450,Fs:.4,Fu:.5,toma:'Base 16A 2p+T',IA:16,pts:6,sec:2.5,tubo:20,
     notas:['Potencia máxima: 5.750 W por circuito.']},
   C8: {nombre:'Calefacción',pot:null,Fs:null,Fu:null,toma:'—',IA:25,pts:null,sec:6,tubo:25,
@@ -271,7 +271,6 @@ const SHORT = {C1:'Iluminac.',C2:'Tomas',C3:'Cocina',C4:'Lavadora',
 
 const SCHEMAS = {
   basico:{
-    img:'esquema-basico.png',
     title:'Esquema Básico — Electrificación Básica',
     sub:'Hasta 5.750 W · ITC-BT-25',
     leyenda:[
