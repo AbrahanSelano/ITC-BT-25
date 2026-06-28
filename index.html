@@ -8,333 +8,217 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ITC-BT-25">
-<meta name="description" content="Características eléctricas de circuitos según ITC-BT-25 REBT">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>ITC-BT-25 — Circuitos REBT</title>
+<title>ITC-BT-25 Circuitos REBT</title>
 <style>
-  :root {
-    --bg:       #0f172a;
-    --surface:  #1e293b;
-    --surface2: #273549;
-    --border:   #334155;
-    --accent:   #3b82f6;
-    --accent2:  #1d4ed8;
-    --text:     #f1f5f9;
-    --muted:    #94a3b8;
-    --green:    #22c55e;
-    --amber:    #f59e0b;
-    --red:      #ef4444;
-    --green-bg: #052e16;
-    --amber-bg: #451a03;
-    --blue-bg:  #1e3a5f;
-    --radius:   12px;
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bot: env(safe-area-inset-bottom, 0px);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+:root{
+  --bg:#0f172a;--surface:#1e293b;--surface2:#273549;--border:#334155;
+  --accent:#3b82f6;--accent2:#1d4ed8;--text:#f1f5f9;--muted:#94a3b8;
+  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;
+  --green-bg:#052e16;--amber-bg:#451a03;--blue-bg:#1e3a5f;
+  --radius:12px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 
-  /* ── Header ── */
-  .header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: calc(var(--safe-top) + 14px) 16px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .header-icon {
-    width: 36px; height: 36px;
-    background: var(--accent2);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-  .header-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
-  .header-sub   { font-size: 12px; color: var(--muted); margin-top: 1px; }
+/* HEADER */
+.header{background:var(--surface);border-bottom:1px solid var(--border);
+  padding:calc(var(--safe-top) + 14px) 16px 14px;
+  display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.header-icon{width:36px;height:36px;background:var(--accent2);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:18px}
+.header-title{font-size:17px;font-weight:600}
+.header-sub{font-size:12px;color:var(--muted);margin-top:1px}
 
-  /* ── Selector ── */
-  .selector-wrap {
-    padding: 16px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  .selector-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .circuit-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-  .circuit-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 6px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.15s;
-    color: var(--text);
-    -webkit-user-select: none;
-  }
-  .circuit-btn:active { transform: scale(0.95); }
-  .circuit-btn.active {
-    background: var(--blue-bg);
-    border-color: var(--accent);
-  }
-  .circuit-btn .code {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent);
-    display: block;
-  }
-  .circuit-btn .name-short {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 2px;
-    line-height: 1.3;
-    display: block;
-  }
-  .circuit-btn.active .name-short { color: #93c5fd; }
+/* SELECTOR */
+.selector-wrap{padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
+.selector-label{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px}
 
-  /* ── Content ── */
-  .content {
-    padding: 16px;
-    padding-bottom: calc(var(--safe-bot) + 24px);
-  }
+/* GRID: 3 cols para circuitos */
+.circuit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 
-  /* Circuit hero */
-  .circuit-hero {
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 18px 16px 14px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .circuit-hero .big-code {
-    font-size: 42px;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-    letter-spacing: -1px;
-    flex-shrink: 0;
-  }
-  .circuit-hero .hero-right { flex: 1; }
-  .circuit-hero .hero-name {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .circuit-hero .hero-norm {
-    font-size: 12px;
-    color: var(--muted);
-    background: var(--surface2);
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-  }
+/* Botones circuito (9) */
+.circuit-btn{background:var(--surface2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;
+  color:var(--text);-webkit-user-select:none}
+.circuit-btn:active{transform:scale(.95)}
+.circuit-btn.active{background:var(--blue-bg);border-color:var(--accent)}
+.circuit-btn .code{font-size:16px;font-weight:700;color:var(--accent);display:block}
+.circuit-btn .sname{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.3;display:block}
+.circuit-btn.active .sname{color:#93c5fd}
 
-  /* Quick stats 2-col grid */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-  }
-  .stat-card.accent { border-color: var(--accent); background: var(--blue-bg); }
-  .stat-card.green  { border-color: var(--green);  background: var(--green-bg); }
-  .stat-card.amber  { border-color: var(--amber);  background: var(--amber-bg); }
-  .stat-label {
-    font-size: 11px;
-    color: var(--muted);
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    margin-bottom: 4px;
-  }
-  .stat-card.accent .stat-label { color: #93c5fd; }
-  .stat-card.green  .stat-label { color: #86efac; }
-  .stat-card.amber  .stat-label { color: #fcd34d; }
-  .stat-value {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--text);
-  }
-  .stat-unit {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--muted);
-    margin-left: 2px;
-  }
-  .stat-card.accent .stat-value { color: #93c5fd; }
-  .stat-card.green  .stat-value { color: #86efac; }
-  .stat-card.amber  .stat-value { color: #fcd34d; }
+/* Botón Caída ΔV — fila completa */
+.btn-caida{grid-column:1/-1;
+  background:linear-gradient(135deg,#1e3a5f,#172554);
+  border:1px solid var(--accent);border-radius:10px;
+  padding:13px 16px;cursor:pointer;transition:all .15s;
+  color:var(--text);display:flex;align-items:center;gap:12px;
+  -webkit-user-select:none}
+.btn-caida:active{transform:scale(.98);opacity:.9}
+.btn-caida.active{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-color:#93c5fd}
+.btn-caida .bc-icon{font-size:22px;flex-shrink:0}
+.btn-caida .bc-title{font-size:14px;font-weight:700;color:#93c5fd}
+.btn-caida .bc-sub{font-size:11px;color:#64748b;margin-top:1px}
 
-  /* Detail rows */
-  .detail-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 12px;
-  }
-  .detail-section-title {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 10px 14px 8px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-  }
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 11px 14px;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-  }
-  .detail-row:last-child { border-bottom: none; }
-  .detail-row-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    min-width: 0;
-  }
-  .detail-icon {
-    width: 30px; height: 30px;
-    border-radius: 8px;
-    background: var(--surface2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-  .detail-label {
-    font-size: 13px;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .detail-val {
-    font-size: 14px;
-    font-weight: 600;
-    text-align: right;
-    color: var(--text);
-    flex-shrink: 0;
-  }
-  .pill {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .pill-blue  { background: var(--blue-bg);  color: #93c5fd; border: 1px solid var(--accent); }
-  .pill-green { background: var(--green-bg); color: #86efac; border: 1px solid var(--green); }
-  .pill-amber { background: var(--amber-bg); color: #fcd34d; border: 1px solid var(--amber); }
-  .pill-gray  { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+/* Botones esquema — cada uno ocupa 1.5 cols = 2 botones en la fila */
+.btn-schema{
+  background:linear-gradient(135deg,#1a2e1a,#0f1f0f);
+  border:1px solid var(--green);border-radius:10px;
+  padding:12px 8px;cursor:pointer;transition:all .15s;
+  color:var(--text);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;
+  -webkit-user-select:none;min-height:64px}
+.btn-schema:active{transform:scale(.97);opacity:.9}
+.btn-schema.active{background:linear-gradient(135deg,#14532d,#052e16);border-color:#86efac}
+.btn-schema .bs-icon{font-size:20px}
+.btn-schema .bs-title{font-size:12px;font-weight:700;color:#86efac;text-align:center;line-height:1.2}
+.btn-schema .bs-sub{font-size:10px;color:#4b7a50;text-align:center}
 
-  /* Notas */
-  .notes-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 12px;
-  }
-  .note-item {
-    display: flex;
-    gap: 10px;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    align-items: flex-start;
-  }
-  .note-item:last-child { border-bottom: none; }
-  .note-num {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--accent);
-    background: var(--blue-bg);
-    border: 1px solid var(--accent);
-    border-radius: 4px;
-    padding: 2px 5px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .note-text {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+/* CONTENT */
+.content{padding:16px;padding-bottom:calc(var(--safe-bot) + 24px)}
 
-  /* Potencia total banner */
-  .power-banner {
-    background: linear-gradient(135deg, #1e3a5f 0%, #172554 100%);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .power-left { }
-  .power-label { font-size: 11px; color: #93c5fd; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
-  .power-formula { font-size: 11px; color: #64748b; margin-top: 2px; }
-  .power-value { font-size: 28px; font-weight: 800; color: #93c5fd; }
-  .power-unit  { font-size: 13px; color: #64748b; }
+/* Circuit hero */
+.circuit-hero{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);
+  padding:18px 16px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:14px}
+.big-code{font-size:42px;font-weight:800;color:var(--accent);line-height:1;letter-spacing:-1px;flex-shrink:0}
+.hero-name{font-size:18px;font-weight:600;line-height:1.2;margin-bottom:6px}
+.hero-norm{font-size:12px;color:var(--muted);background:var(--surface2);
+  display:inline-block;padding:3px 8px;border-radius:6px;border:1px solid var(--border)}
 
-  /* No data */
-  .no-data { color: #475569; font-style: italic; font-size: 13px; }
+/* Stats 2-col */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+.stat-card.accent{border-color:var(--accent);background:var(--blue-bg)}
+.stat-card.green{border-color:var(--green);background:var(--green-bg)}
+.stat-card.amber{border-color:var(--amber);background:var(--amber-bg)}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.stat-card.accent .stat-label{color:#93c5fd}
+.stat-card.green  .stat-label{color:#86efac}
+.stat-card.amber  .stat-label{color:#fcd34d}
+.stat-value{font-size:22px;font-weight:700;line-height:1}
+.stat-unit{font-size:12px;font-weight:400;color:var(--muted);margin-left:2px}
+.stat-card.accent .stat-value{color:#93c5fd}
+.stat-card.green  .stat-value{color:#86efac}
+.stat-card.amber  .stat-value{color:#fcd34d}
 
-  /* Install banner */
-  #install-banner {
-    display: none;
-    position: fixed;
-    bottom: calc(var(--safe-bot) + 16px);
-    left: 16px; right: 16px;
-    background: var(--accent2);
-    color: white;
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    z-index: 100;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-  }
-  #install-banner .ib-text { flex: 1; font-size: 14px; font-weight: 500; }
-  #install-banner .ib-sub  { font-size: 11px; opacity: 0.8; margin-top: 2px; }
-  #install-banner .ib-btn  { background: white; color: var(--accent2); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-  #install-banner .ib-close { font-size: 20px; opacity: 0.7; padding: 4px; }
+/* Power banner */
+.power-banner{background:linear-gradient(135deg,#1e3a5f,#172554);border:1px solid var(--accent);
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;
+  display:flex;justify-content:space-between;align-items:center}
+.power-label{font-size:11px;color:#93c5fd;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.power-formula{font-size:11px;color:#64748b;margin-top:2px}
+.power-value{font-size:28px;font-weight:800;color:#93c5fd}
+.power-unit{font-size:13px;color:#64748b;text-align:right}
+
+/* Detail sections */
+.detail-section{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.detail-section-title{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--muted);padding:10px 14px 8px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.detail-row{display:flex;justify-content:space-between;align-items:center;
+  padding:11px 14px;border-bottom:1px solid var(--border);gap:12px}
+.detail-row:last-child{border-bottom:none}
+.detail-row-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.detail-icon{width:30px;height:30px;border-radius:8px;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.detail-label{font-size:13px;color:var(--muted);white-space:nowrap}
+.detail-val{font-size:14px;font-weight:600;text-align:right;color:var(--text);flex-shrink:0}
+
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:13px;font-weight:600}
+.pill-blue{background:var(--blue-bg);color:#93c5fd;border:1px solid var(--accent)}
+.pill-green{background:var(--green-bg);color:#86efac;border:1px solid var(--green)}
+.pill-amber{background:var(--amber-bg);color:#fcd34d;border:1px solid var(--amber)}
+.no-data{color:#475569;font-style:italic;font-size:13px}
+
+/* Notes */
+.notes-section{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.note-item{display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);align-items:flex-start}
+.note-item:last-child{border-bottom:none}
+.note-num{font-size:10px;font-weight:700;color:var(--accent);background:var(--blue-bg);
+  border:1px solid var(--accent);border-radius:4px;padding:2px 5px;flex-shrink:0;margin-top:1px}
+.note-text{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* SCHEMA VIEWER */
+.schema-viewer{background:var(--surface);border-radius:var(--radius);
+  border:1px solid var(--green);overflow:hidden;margin-bottom:12px}
+.schema-header{background:linear-gradient(135deg,#14532d,#052e16);
+  padding:14px 16px;border-bottom:1px solid var(--green);display:flex;align-items:center;gap:10px}
+.schema-header-icon{font-size:24px}
+.schema-header-title{font-size:15px;font-weight:700;color:#86efac}
+.schema-header-sub{font-size:11px;color:#4b7a50;margin-top:2px}
+.schema-img-wrap{overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;
+  touch-action:pan-x pan-y pinch-zoom;max-height:55vh}
+.schema-img-wrap img{display:block;width:100%;height:auto;cursor:zoom-in}
+.schema-img-wrap.zoomed img{width:220%;cursor:zoom-out}
+.schema-hint{font-size:11px;color:#475569;text-align:center;padding:8px;font-style:italic;
+  border-top:1px solid var(--border)}
+.schema-legend{padding:12px 14px;border-top:1px solid var(--border)}
+.schema-legend-title{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.legend-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.legend-code{font-size:11px;font-weight:700;color:#86efac;background:#052e16;
+  border:1px solid var(--green);border-radius:4px;padding:2px 6px;flex-shrink:0;min-width:36px;text-align:center}
+.legend-desc{font-size:12px;color:var(--muted);line-height:1.4}
+
+/* CALCULADORA CAIDA */
+.calc-section{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.calc-hero{background:linear-gradient(135deg,#1e3a5f,#0f2240);padding:16px;
+  border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.calc-hero-icon{font-size:28px}
+.calc-hero-title{font-size:16px;font-weight:700;color:#93c5fd}
+.calc-hero-sub{font-size:12px;color:#64748b;margin-top:2px}
+.calc-field{padding:11px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px}
+.calc-field label{font-size:13px;color:var(--muted);min-width:130px;flex-shrink:0}
+.calc-field input,.calc-field select{flex:1;background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:8px 10px;color:var(--text);font-size:14px;font-weight:600;outline:none;min-width:0}
+.calc-field input:focus,.calc-field select:focus{border-color:var(--accent)}
+.calc-btn{width:100%;padding:14px;background:var(--accent2);border:none;
+  color:white;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s}
+.calc-btn:active{background:#1e40af}
+
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;
+  background:var(--surface2);border-top:1px solid var(--border)}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.result-card.ok{border-color:var(--green);background:var(--green-bg)}
+.result-card.fail{border-color:var(--red);background:#450a0a}
+.result-card.hi{border-color:var(--accent);background:var(--blue-bg)}
+.result-lbl{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.4px;
+  text-transform:uppercase;margin-bottom:3px}
+.result-card.ok .result-lbl{color:#86efac}
+.result-card.fail .result-lbl{color:#fca5a5}
+.result-card.hi .result-lbl{color:#93c5fd}
+.result-val{font-size:19px;font-weight:800}
+.result-card.ok .result-val{color:#86efac}
+.result-card.fail .result-val{color:#fca5a5}
+.result-card.hi .result-val{color:#93c5fd}
+.result-unit{font-size:11px;color:var(--muted);font-weight:400}
+.cumple-banner{grid-column:1/-1;border-radius:10px;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700}
+.cumple-banner.ok{background:var(--green-bg);border:1px solid var(--green);color:#86efac}
+.cumple-banner.fail{background:#450a0a;border:1px solid var(--red);color:#fca5a5}
+.formulas-note{grid-column:1/-1;font-size:11px;color:#475569;line-height:1.6;padding:4px 0}
+
+/* INSTALL BANNER */
+#install-banner{display:none;position:fixed;bottom:calc(var(--safe-bot)+16px);
+  left:16px;right:16px;background:var(--accent2);color:white;border-radius:var(--radius);
+  padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:100;
+  align-items:center;gap:12px}
+#install-banner .ib-text{flex:1;font-size:14px;font-weight:500}
+#install-banner .ib-sub{font-size:11px;opacity:.8;margin-top:2px}
+#install-banner .ib-btn{background:white;color:var(--accent2);padding:8px 14px;
+  border-radius:8px;font-size:13px;font-weight:700;flex-shrink:0;cursor:pointer}
+#install-banner .ib-close{font-size:20px;opacity:.7;padding:4px;cursor:pointer}
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <div class="header">
   <div class="header-icon">⚡</div>
   <div>
@@ -343,16 +227,13 @@
   </div>
 </div>
 
-<!-- Circuit selector -->
 <div class="selector-wrap">
-  <div class="selector-label">Selecciona el circuito</div>
-  <div class="circuit-grid" id="circuit-grid"></div>
+  <div class="selector-label">Selecciona el circuito o herramienta</div>
+  <div class="circuit-grid" id="grid"></div>
 </div>
 
-<!-- Main content -->
 <div class="content" id="content"></div>
 
-<!-- Install banner -->
 <div id="install-banner">
   <span class="ib-close" id="ib-close">✕</span>
   <div class="ib-text">
@@ -363,279 +244,336 @@
 </div>
 
 <script>
+/* ── DATOS CIRCUITOS ── */
 const CIRCUITS = {
-  C1:  {
-    nombre: 'Iluminación',
-    pot: 200, Fs: 0.75, Fu: 0.5,
-    toma: 'Punto de luz', IA: 10, pts: 30, sec: 1.5, tubo: 16,
-    notas: [
-      'Tensión considerada: 230 V entre fase y neutro.',
-      'El punto de luz incluirá conductor de protección.'
-    ]
-  },
-  C2:  {
-    nombre: 'Tomas de uso general',
-    pot: 3450, Fs: 0.2, Fu: 0.25,
-    toma: 'Base 16A 2p+T', IA: 16, pts: 20, sec: 2.5, tubo: 20,
-    notas: [
-      'Tensión considerada: 230 V entre fase y neutro.',
-      'Las bases de toma de corriente de 16A 2p+T serán fijas del tipo indicado en la figura C2a de la norma UNE 20315.'
-    ]
-  },
-  C3:  {
-    nombre: 'Cocina y horno',
-    pot: 5400, Fs: 0.5, Fu: 0.75,
-    toma: 'Base 25A 2p+T', IA: 25, pts: 2, sec: 6, tubo: 25,
-    notas: [
-      'La potencia máxima permisible por circuito será de 5.750 W.',
-      'Bases de 25A 2p+T según norma UNE 20315 (figura ESB 25-5A).'
-    ]
-  },
-  C4:  {
-    nombre: 'Lavadora, lavavajillas y termo eléctrico',
-    pot: 3450, Fs: 0.66, Fu: 0.75,
-    toma: 'Base 16A 2p+T', IA: 20, pts: 3, sec: 4, tubo: 20,
-    notas: [
-      'La potencia máxima permisible por circuito será de 2.300 W.',
-      'La sección de 4 mm² parte de una caja de derivación del circuito de 6 mm².',
-      'En este circuito cada toma individual puede conectarse mediante un conductor de 2,5 mm².',
-      'Pueden combinarse con fusibles o interruptores automáticos de 16 A.'
-    ]
-  },
-  C5:  {
-    nombre: 'Baño, cuarto de cocina',
-    pot: 3450, Fs: 0.4, Fu: 0.5,
-    toma: 'Base 16A 2p+T', IA: 16, pts: 6, sec: 2.5, tubo: 20,
-    notas: [
-      'La potencia máxima permisible por circuito será de 5.750 W.'
-    ]
-  },
-  C8:  {
-    nombre: 'Calefacción',
-    pot: null, Fs: null, Fu: null,
-    toma: '—', IA: 25, pts: null, sec: 6, tubo: 25,
-    notas: [
-      'Potencia según proyecto.',
-      'Los fusibles o interruptores automáticos no son necesarios si se dispone de circuitos independientes para cada aparato con interruptor automático de 16 A en cada circuito.'
-    ]
-  },
-  C9:  {
-    nombre: 'Aire acondicionado',
-    pot: null, Fs: null, Fu: null,
-    toma: '—', IA: 25, pts: null, sec: 6, tubo: 25,
-    notas: [
-      'Potencia según proyecto.',
-      'El desdoblamiento del circuito no supondrá el paso a electrificación elevada.'
-    ]
-  },
-  C10: {
-    nombre: 'Secadora',
-    pot: 3450, Fs: 1.0, Fu: 0.75,
-    toma: 'Base 16A 2p+T', IA: 16, pts: 1, sec: 2.5, tubo: 20,
-    notas: [
-      'Factor de simultaneidad 1,00 (aparato de uso individual).'
-    ]
-  },
-  C11: {
-    nombre: 'Automatización',
-    pot: null, Fs: null, Fu: null,
-    toma: '—', IA: 10, pts: null, sec: 1.5, tubo: 16,
-    notas: [
-      'Tensión considerada: 230 V entre fase y neutro.',
-      'El punto de luz incluirá conductor de protección.'
-    ]
-  }
+  C1: {nombre:'Iluminación',pot:200,Fs:.75,Fu:.5,toma:'Punto de luz',IA:10,pts:30,sec:1.5,tubo:16,
+    notas:['Tensión: 230 V entre fase y neutro.','El punto de luz incluirá conductor de protección.']},
+  C2: {nombre:'Tomas de uso general',pot:3450,Fs:.2,Fu:.25,toma:'Base 16A 2p+T',IA:16,pts:20,sec:2.5,tubo:20,
+    notas:['Bases 16A 2p+T fijas según figura C2a (UNE 20315).']},
+  C3: {nombre:'Cocina y horno',pot:5400,Fs:.5,Fu:.75,toma:'Base 25A 2p+T',IA:25,pts:2,sec:6,tubo:25,
+    notas:['Potencia máxima permisible: 5.750 W por circuito.','Bases 25A 2p+T según UNE 20315.']},
+  C4: {nombre:'Lavadora, lavavajillas y termo',pot:3450,Fs:.66,Fu:.75,toma:'Base 16A 2p+T',IA:20,pts:3,sec:4,tubo:20,
+    notas:['Potencia máxima: 2.300 W por circuito.','Sección 4 mm² parte de caja de derivación de 6 mm².','Cada toma puede conectarse con conductor de 2,5 mm².']},
+  C5: {nombre:'Baño, cuarto de cocina',pot:3450,Fs:.4,Fu:.5,toma:'Base 16A 2p+T',IA:16,pts:6,sec:2.5,tubo:20,
+    notas:['Potencia máxima: 5.750 W por circuito.']},
+  C8: {nombre:'Calefacción',pot:null,Fs:null,Fu:null,toma:'—',IA:25,pts:null,sec:6,tubo:25,
+    notas:['Potencia según proyecto.']},
+  C9: {nombre:'Aire acondicionado',pot:null,Fs:null,Fu:null,toma:'—',IA:25,pts:null,sec:6,tubo:25,
+    notas:['Potencia según proyecto.']},
+  C10:{nombre:'Secadora',pot:3450,Fs:1.0,Fu:.75,toma:'Base 16A 2p+T',IA:16,pts:1,sec:2.5,tubo:20,
+    notas:['Factor de simultaneidad 1,00 (uso individual).']},
+  C11:{nombre:'Automatización',pot:null,Fs:null,Fu:null,toma:'—',IA:10,pts:null,sec:1.5,tubo:16,
+    notas:['Tensión: 230 V entre fase y neutro.']}
 };
 
-const SHORT = {
-  C1:'Iluminación', C2:'Tomas', C3:'Cocina', C4:'Lavadora',
-  C5:'Baño', C8:'Calefacción', C9:'Aire acond.', C10:'Secadora', C11:'Automati.'
+const SHORT = {C1:'Iluminac.',C2:'Tomas',C3:'Cocina',C4:'Lavadora',
+               C5:'Baño',C8:'Calefacc.',C9:'Aire ac.',C10:'Secadora',C11:'Automat.'};
+
+const SCHEMAS = {
+  basico:{
+    img:'esquema-basico.png',
+    title:'Esquema Básico — Electrificación Básica',
+    sub:'Hasta 5.750 W · ITC-BT-25',
+    leyenda:[
+      {cod:'ICP',  desc:'Interruptor de Control de Potencia (según potencia contratada)'},
+      {cod:'IGA',  desc:'Interruptor General Automático 25A o 32A'},
+      {cod:'IDif', desc:'Interruptor Diferencial 40A / 30mA'},
+      {cod:'C1',   desc:'Iluminación — 10A · 2×1,5+1,5 mm²'},
+      {cod:'C2',   desc:'TC usos varios — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C3',   desc:'Cocina-horno — 25A · 2×6+6 mm²'},
+      {cod:'C4',   desc:'Lavavajillas / Termo / Lavadora — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C5',   desc:'TC baño y cocina — 16A · 2×2,5+2,5 mm²'},
+    ]
+  },
+  elevado:{
+    img:'esquema-elevado.png',
+    title:'Esquema Elevado — Electrificación Elevada',
+    sub:'Más de 5.750 W · ITC-BT-25',
+    leyenda:[
+      {cod:'ICP',  desc:'Interruptor de Control de Potencia (según potencia contratada)'},
+      {cod:'IGA',  desc:'Interruptor General Automático 40A'},
+      {cod:'IDif', desc:'Interruptores Diferenciales 40A / 30mA (varios)'},
+      {cod:'C1',   desc:'Iluminación 1 — 10A · 2×1,5+1,5 mm²'},
+      {cod:'C6',   desc:'Iluminación 2 — 10A · 2×2,5+2,5 mm²'},
+      {cod:'C2',   desc:'TC uso general 1 — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C7',   desc:'TC uso general 2 — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C3',   desc:'Cocina-Horno — 25A · 2×6+6 mm²'},
+      {cod:'C4',   desc:'Lavavajillas / Termo / Lavadora — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C5',   desc:'TC baño y cocina — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C8',   desc:'Calefacción — 25A · 2×6+6 mm²'},
+      {cod:'C9',   desc:'Aire acondicionado — 25A · 2×6+6 mm²'},
+      {cod:'C10',  desc:'Secadora — 16A · 2×2,5+2,5 mm²'},
+      {cod:'C11',  desc:'Domótica/Automatización — 2×1,5+1,5 mm²'},
+    ]
+  }
 };
 
 let selected = 'C1';
+let mode = 'info';
 
-function v(val, unit='') {
-  if (val === null || val === undefined) return '<span class="no-data">—</span>';
-  return `<strong>${val}</strong>${unit ? ' <span style="font-size:12px;color:var(--muted)">' + unit + '</span>' : ''}`;
+/* ── HELPERS ── */
+function pill(v,t,u=''){
+  if(v===null||v===undefined) return '<span class="no-data">—</span>';
+  return `<span class="pill pill-${t}">${v}${u?' '+u:''}</span>`;
 }
 
-function pill(val, type, unit='') {
-  if (val === null || val === undefined) return '<span class="no-data">—</span>';
-  return `<span class="pill pill-${type}">${val}${unit ? ' ' + unit : ''}</span>`;
+/* ── BUILD GRID ── */
+function buildGrid(){
+  const g = document.getElementById('grid');
+
+  // 9 circuit buttons
+  let html = Object.keys(CIRCUITS).map(k =>
+    `<button class="circuit-btn${k===selected&&mode==='info'?' active':''}" onclick="go('${k}')">
+       <span class="code">${k}</span>
+       <span class="sname">${SHORT[k]}</span>
+     </button>`
+  ).join('');
+
+  // Caída ΔV — full width
+  html += `<button class="btn-caida${mode==='caida'?' active':''}" onclick="goCaida()">
+    <span class="bc-icon">📉</span>
+    <div>
+      <div class="bc-title">Caída de tensión ΔV</div>
+      <div class="bc-sub">ITC-BT-19 · REBT · Cu/Al · Mono/Tri</div>
+    </div>
+  </button>`;
+
+  // Schema buttons — 2 columns, span 3 cols together
+  html += `<button class="btn-schema${mode==='basico'?' active':''}" onclick="goSchema('basico')">
+    <span class="bs-icon">📋</span>
+    <span class="bs-title">Esquema Básico</span>
+    <span class="bs-sub">Electrific. básica</span>
+  </button>`;
+
+  html += `<button class="btn-schema${mode==='elevado'?' active':''}" style="grid-column:span 2" onclick="goSchema('elevado')">
+    <span class="bs-icon">📐</span>
+    <span class="bs-title">Esquema Elevado</span>
+    <span class="bs-sub">Electrific. elevada</span>
+  </button>`;
+
+  g.innerHTML = html;
 }
 
-function buildGrid() {
-  const grid = document.getElementById('circuit-grid');
-  grid.innerHTML = Object.keys(CIRCUITS).map(k => `
-    <button class="circuit-btn${k===selected?' active':''}" onclick="select('${k}')">
-      <span class="code">${k}</span>
-      <span class="name-short">${SHORT[k]}</span>
-    </button>
-  `).join('');
-}
-
-function buildContent() {
+/* ── INFO CIRCUITO ── */
+function buildInfo(){
   const d = CIRCUITS[selected];
   const hasCalc = d.pot && d.Fs && d.Fu && d.pts;
-  const potTotal = hasCalc ? Math.round(d.pts * d.pot * d.Fs * d.Fu) : null;
+  const potTotal = hasCalc ? Math.round(d.pts*d.pot*d.Fs*d.Fu) : null;
+  let h = '';
 
-  let html = '';
-
-  // Hero
-  html += `
-  <div class="circuit-hero">
+  h += `<div class="circuit-hero">
     <div class="big-code">${selected}</div>
-    <div class="hero-right">
-      <div class="hero-name">${d.nombre}</div>
-      <span class="hero-norm">ITC-BT-25 · REBT</span>
-    </div>
+    <div><div class="hero-name">${d.nombre}</div>
+    <span class="hero-norm">ITC-BT-25 · REBT</span></div>
   </div>`;
 
-  // Quick stats row (IA + Sección)
-  html += `<div class="stats-grid">
-    <div class="stat-card accent">
-      <div class="stat-label">⚡ Interruptor automático</div>
-      <div class="stat-value">${d.IA}<span class="stat-unit">A</span></div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-label">🔌 Sección mínima</div>
-      <div class="stat-value">${d.sec}<span class="stat-unit">mm²</span></div>
-    </div>
+  h += `<div class="stats-grid">
+    <div class="stat-card accent"><div class="stat-label">⚡ Interruptor</div>
+      <div class="stat-value">${d.IA}<span class="stat-unit">A</span></div></div>
+    <div class="stat-card green"><div class="stat-label">🔌 Sección mín.</div>
+      <div class="stat-value">${d.sec}<span class="stat-unit">mm²</span></div></div>
   </div>`;
 
-  // Potencia total banner (only when calculable)
-  if (hasCalc) {
-    html += `
-    <div class="power-banner">
-      <div class="power-left">
-        <div class="power-label">Potencia total estimada</div>
-        <div class="power-formula">${d.pts} tomas × ${d.pot} W × ${d.Fs} × ${d.Fu}</div>
-      </div>
-      <div>
-        <div class="power-value">${potTotal.toLocaleString('es-ES')}</div>
-        <div class="power-unit" style="text-align:right">W</div>
-      </div>
+  if(hasCalc){
+    h += `<div class="power-banner">
+      <div><div class="power-label">Potencia total estimada</div>
+        <div class="power-formula">${d.pts} tomas × ${d.pot}W × ${d.Fs} × ${d.Fu}</div></div>
+      <div><div class="power-value">${potTotal.toLocaleString('es-ES')}</div>
+        <div class="power-unit">W</div></div>
     </div>`;
   }
 
-  // Detail rows
-  html += `
-  <div class="detail-section">
+  h += `<div class="detail-section">
     <div class="detail-section-title">Características eléctricas</div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">🔋</div>
-        <span class="detail-label">Potencia por toma</span>
-      </div>
-      <div class="detail-val">${d.pot ? d.pot + ' W' : '<span class="no-data">Según proyecto</span>'}</div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">⚖️</div>
-        <span class="detail-label">Factor simultán. Fs</span>
-      </div>
-      <div class="detail-val">${d.Fs !== null ? d.Fs : '<span class="no-data">—</span>'}</div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">📊</div>
-        <span class="detail-label">Factor utilización Fu</span>
-      </div>
-      <div class="detail-val">${d.Fu !== null ? d.Fu : '<span class="no-data">—</span>'}</div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">🔌</div>
-        <span class="detail-label">Tipo de toma</span>
-      </div>
-      <div class="detail-val" style="font-size:13px">${d.toma}</div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">🔢</div>
-        <span class="detail-label">Máx. puntos/circuito</span>
-      </div>
-      <div class="detail-val">${d.pts !== null ? d.pts : '<span class="no-data">—</span>'}</div>
-    </div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">🔋</div>
+      <span class="detail-label">Potencia por toma</span></div>
+      <div class="detail-val">${d.pot?d.pot+' W':'<span class="no-data">Según proyecto</span>'}</div></div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">⚖️</div>
+      <span class="detail-label">Factor simultán. Fs</span></div>
+      <div class="detail-val">${d.Fs!==null?d.Fs:'<span class="no-data">—</span>'}</div></div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">📊</div>
+      <span class="detail-label">Factor utilización Fu</span></div>
+      <div class="detail-val">${d.Fu!==null?d.Fu:'<span class="no-data">—</span>'}</div></div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">🔌</div>
+      <span class="detail-label">Tipo de toma</span></div>
+      <div class="detail-val" style="font-size:13px">${d.toma}</div></div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">🔢</div>
+      <span class="detail-label">Máx. puntos/circuito</span></div>
+      <div class="detail-val">${d.pts!==null?d.pts:'<span class="no-data">—</span>'}</div></div>
   </div>`;
 
-  // Cable + tubo
-  html += `
-  <div class="detail-section">
+  h += `<div class="detail-section">
     <div class="detail-section-title">Cableado y conducción</div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">〰️</div>
-        <span class="detail-label">Sección conductores</span>
-      </div>
-      <div class="detail-val">${pill(d.sec, 'green', 'mm²')}</div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">⭕</div>
-        <span class="detail-label">Tubo / conducto Ø</span>
-      </div>
-      <div class="detail-val">${pill(d.tubo, 'amber', 'mm')}</div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-row-left">
-        <div class="detail-icon">🔒</div>
-        <span class="detail-label">Interruptor automático</span>
-      </div>
-      <div class="detail-val">${pill(d.IA, 'blue', 'A')}</div>
-    </div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">〰️</div>
+      <span class="detail-label">Sección conductores</span></div>
+      <div class="detail-val">${pill(d.sec,'green','mm²')}</div></div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">⭕</div>
+      <span class="detail-label">Tubo / conducto Ø</span></div>
+      <div class="detail-val">${pill(d.tubo,'amber','mm')}</div></div>
+    <div class="detail-row"><div class="detail-row-left"><div class="detail-icon">🔒</div>
+      <span class="detail-label">Interruptor automático</span></div>
+      <div class="detail-val">${pill(d.IA,'blue','A')}</div></div>
   </div>`;
 
-  // Notas
-  if (d.notas && d.notas.length) {
-    html += `
-    <div class="notes-section">
+  if(d.notas&&d.notas.length){
+    h += `<div class="notes-section">
       <div class="detail-section-title">Notas ITC-BT-25</div>
-      ${d.notas.map((n,i) => `
-        <div class="note-item">
-          <span class="note-num">${i+1}</span>
-          <span class="note-text">${n}</span>
-        </div>`).join('')}
+      ${d.notas.map((n,i)=>`<div class="note-item">
+        <span class="note-num">${i+1}</span>
+        <span class="note-text">${n}</span>
+      </div>`).join('')}
     </div>`;
   }
 
-  document.getElementById('content').innerHTML = html;
+  document.getElementById('content').innerHTML = h;
 }
 
-function select(key) {
-  selected = key;
-  buildGrid();
-  buildContent();
+/* ── CALCULADORA CAIDA ── */
+function buildCaida(){
+  document.getElementById('content').innerHTML = `
+  <div class="calc-section">
+    <div class="calc-hero">
+      <div class="calc-hero-icon">📉</div>
+      <div><div class="calc-hero-title">Caída de tensión ΔV</div>
+        <div class="calc-hero-sub">ITC-BT-19 · REBT · Monofásico / Trifásico</div></div>
+    </div>
+    <div class="calc-field"><label>Sistema</label>
+      <select id="c-sis"><option value="mono">Monofásico</option><option value="tri">Trifásico</option></select></div>
+    <div class="calc-field"><label>Tensión (V)</label>
+      <input type="number" id="c-v" value="230" min="1"></div>
+    <div class="calc-field"><label>Potencia (W)</label>
+      <input type="number" id="c-p" value="3000" min="1"></div>
+    <div class="calc-field"><label>Factor potencia</label>
+      <input type="number" id="c-fp" value="0.9" min="0.1" max="1" step="0.01"></div>
+    <div class="calc-field"><label>Longitud (m)</label>
+      <input type="number" id="c-l" value="50" min="1"></div>
+    <div class="calc-field"><label>Sección (mm²)</label>
+      <select id="c-s">
+        <option value="1.5">1,5</option><option value="2.5">2,5</option>
+        <option value="4">4</option><option value="6" selected>6</option>
+        <option value="10">10</option><option value="16">16</option>
+        <option value="25">25</option><option value="35">35</option>
+        <option value="50">50</option><option value="70">70</option>
+        <option value="95">95</option><option value="120">120</option>
+        <option value="150">150</option><option value="185">185</option>
+        <option value="240">240</option>
+      </select></div>
+    <div class="calc-field"><label>Material</label>
+      <select id="c-mat"><option value="56">Cobre (Cu)</option><option value="35">Aluminio (Al)</option></select></div>
+    <div class="calc-field"><label>Límite caída</label>
+      <select id="c-lim"><option value="3">3% — Vivienda</option><option value="5">5% — Industrial</option></select></div>
+    <button class="calc-btn" onclick="calcular()">⚡  CALCULAR</button>
+    <div id="result-area"></div>
+  </div>`;
 }
 
-// Init
+function calcular(){
+  const sis  = document.getElementById('c-sis').value;
+  const Vn   = +document.getElementById('c-v').value;
+  const P    = +document.getElementById('c-p').value;
+  const fp   = +document.getElementById('c-fp').value;
+  const L    = +document.getElementById('c-l').value;
+  const S    = +document.getElementById('c-s').value;
+  const gam  = +document.getElementById('c-mat').value;
+  const lim  = +document.getElementById('c-lim').value;
+  if([Vn,P,fp,L,S,gam].some(v=>!v||v<=0)) return;
+  const I   = sis==='mono' ? P/(Vn*fp) : P/(Math.sqrt(3)*Vn*fp);
+  const R   = sis==='mono' ? 2*L/(gam*S) : Math.sqrt(3)*L/(gam*S);
+  const dV  = sis==='mono' ? 2*P*L/(gam*S*Vn) : P*L/(gam*S*Vn);
+  const pct = dV/Vn*100;
+  const ok  = pct<=lim;
+  document.getElementById('result-area').innerHTML = `
+  <div class="result-grid">
+    <div class="cumple-banner ${ok?'ok':'fail'}">
+      <span style="font-size:22px">${ok?'✅':'❌'}</span>
+      <div><div>${ok?'SÍ CUMPLE REBT':'NO CUMPLE REBT'}</div>
+        <div style="font-size:12px;font-weight:400;opacity:.8">${pct.toFixed(3)}% ${ok?'≤':'>'} ${lim}% límite</div></div>
+    </div>
+    <div class="result-card hi"><div class="result-lbl">Corriente I</div>
+      <div class="result-val">${I.toFixed(2)}<span class="result-unit"> A</span></div></div>
+    <div class="result-card hi"><div class="result-lbl">Resistencia R</div>
+      <div class="result-val">${R.toFixed(4)}<span class="result-unit"> Ω</span></div></div>
+    <div class="result-card ${ok?'ok':'fail'}"><div class="result-lbl">Caída ΔV</div>
+      <div class="result-val">${dV.toFixed(3)}<span class="result-unit"> V</span></div></div>
+    <div class="result-card ${ok?'ok':'fail'}"><div class="result-lbl">Caída ΔV%</div>
+      <div class="result-val">${pct.toFixed(3)}<span class="result-unit"> %</span></div></div>
+    <div class="formulas-note">
+      ${sis==='mono'?'Mono: ΔV = 2·P·L/(γ·S·Vn)  |  I = P/(V·cosφ)':'Tri: ΔV = P·L/(γ·S·Vn)  |  I = P/(√3·V·cosφ)'}<br>
+      γCu=56 · γAl=35 m/Ω·mm²
+    </div>
+  </div>`;
+}
+
+/* ── ESQUEMAS ── */
+function buildSchema(tipo){
+  const s = SCHEMAS[tipo];
+  document.getElementById('content').innerHTML = `
+  <div class="schema-viewer">
+    <div class="schema-header">
+      <div class="schema-header-icon">${tipo==='basico'?'📋':'📐'}</div>
+      <div><div class="schema-header-title">${s.title}</div>
+        <div class="schema-header-sub">${s.sub}</div></div>
+    </div>
+    <div class="schema-img-wrap" id="img-wrap" onclick="toggleZoom()">
+      <img src="${s.img}" alt="${s.title}">
+    </div>
+    <div class="schema-hint">Toca la imagen para ampliar · Pellizca para hacer zoom</div>
+    <div class="schema-legend">
+      <div class="schema-legend-title">Leyenda de circuitos</div>
+      ${s.leyenda.map(c=>`
+        <div class="legend-row">
+          <span class="legend-code">${c.cod}</span>
+          <span class="legend-desc">${c.desc}</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function toggleZoom(){
+  const w = document.getElementById('img-wrap');
+  if(w) w.classList.toggle('zoomed');
+}
+
+/* ── NAVIGATION ── */
+function go(key){
+  selected = key; mode = 'info';
+  buildGrid(); buildInfo();
+}
+function goCaida(){
+  mode = 'caida';
+  buildGrid(); buildCaida();
+}
+function goSchema(tipo){
+  mode = tipo;
+  buildGrid(); buildSchema(tipo);
+}
+
+/* ── INIT ── */
 buildGrid();
-buildContent();
+buildInfo();
 
-// Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
+/* ── SERVICE WORKER ── */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
 
-// Install prompt
+/* ── INSTALL PROMPT ── */
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('install-banner').style.display = 'flex';
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault(); deferredPrompt=e;
+  document.getElementById('install-banner').style.display='flex';
 });
-document.getElementById('ib-btn').addEventListener('click', () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      document.getElementById('install-banner').style.display = 'none';
-      deferredPrompt = null;
+document.getElementById('ib-btn').onclick = ()=>{
+  if(deferredPrompt){ deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>{
+      document.getElementById('install-banner').style.display='none';
+      deferredPrompt=null;
     });
   }
-});
-document.getElementById('ib-close').addEventListener('click', () => {
-  document.getElementById('install-banner').style.display = 'none';
-});
+};
+document.getElementById('ib-close').onclick = ()=>{
+  document.getElementById('install-banner').style.display='none';
+};
 </script>
 </body>
 </html>
