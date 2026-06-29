@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -292,7 +293,7 @@ function buildGrid(){
   // Esquema elevado
   h+='<button class="b-esc'+(mode==='elevado'?' on':'')+'" onclick="goSch(\'elevado\')"><span class="i">📐</span><span class="t">Esquema Elevado</span><span class="s">Electrific. elevada</span></button>';
     // PDF Instalaciones Sanitarias — full width
-  h+='<button class="b-pdf'+(mode==='pdf'?' on':'')+'" onclick="goPdf()"><span class="i">📄</span><span class="t">Inst. Sanitarias</span><span class="s">PDF · 334 págs.</span></button>';
+  h+='<button class="b-pdf'+(mode==='pdf'?' on':'')+'" onclick="goPdf()"><span class="i">📄</span><span class="t">Instalaciones</span><span class="s">Eléctricas · Sanitarias</span></button>';
   document.getElementById('grid').innerHTML=h;
 }
 
@@ -359,30 +360,34 @@ function toggleZ(){const w=document.getElementById('siw');if(w)w.classList.toggl
 
 
 function showPdf(){
-  document.getElementById('content').innerHTML=
-    '<div style="background:var(--surface);border-radius:var(--R);border:1px solid #a855f7;overflow:hidden;margin-bottom:10px">'
+  let h='<div style="background:var(--surface);border-radius:var(--R);border:1px solid #a855f7;overflow:hidden;margin-bottom:10px">'
     +'<div style="background:linear-gradient(135deg,#3b0764,#1e1035);padding:13px 14px;border-bottom:1px solid #a855f7;display:flex;align-items:center;gap:9px">'
-    +'<span style="font-size:22px">📄</span>'
-    +'<div><div style="font-size:14px;font-weight:700;color:#d8b4fe">Instalaciones Sanitarias</div>'
-    +'<div style="font-size:10px;color:#7c3aed;margin-top:2px">334 páginas · ITC-BT · Adobe InDesign CS4</div></div></div>'
-    +'<div style="padding:12px 14px;background:var(--s2);border-bottom:1px solid var(--border)">'
-    +'<a href="instalaciones-sanitarias.pdf" target="_blank" '
-    +'style="display:flex;align-items:center;justify-content:center;gap:10px;'
-    +'background:linear-gradient(135deg,#3b0764,#1e1035);border:1px solid #a855f7;'
-    +'border-radius:9px;padding:14px;color:#d8b4fe;text-decoration:none;font-size:14px;font-weight:700">'
-    +'<span style="font-size:22px">📖</span> Abrir PDF a pantalla completa</a></div>'
-    +'<div style="padding:10px 14px">'
-    +'<div style="font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Contenido del documento</div>'
-    +'<div style="font-size:12px;color:var(--muted);line-height:1.7">'
-    +'📌 Instalaciones de fontanería y saneamiento<br>'
-    +'📌 Dimensionado de tuberías y caudales<br>'
-    +'📌 Normativa CTE DB-HS4 y DB-HS5<br>'
-    +'📌 Instalaciones de agua fría y caliente (ACS)<br>'
-    +'📌 Sistemas de evacuación y alcantarillado<br>'
-    +'📌 Esquemas y planos de instalaciones<br>'
-    +'📌 334 páginas · formato A4'
-    +'</div></div></div>';
+    +'<span style="font-size:22px">📚</span>'
+    +'<div><div style="font-size:14px;font-weight:700;color:#d8b4fe">Instalaciones</div>'
+    +'<div style="font-size:10px;color:#7c3aed;margin-top:2px">Documentación técnica completa</div></div></div>';
+
+  h+='<a href="instalaciones-electricas.pdf" target="_blank" style="display:flex;align-items:center;gap:12px;'
+    +'padding:14px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text)">'
+    +'<div style="width:42px;height:42px;border-radius:9px;background:#1e3a5f;border:1px solid var(--accent);'
+    +'display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚡</div>'
+    +'<div style="flex:1"><div style="font-size:14px;font-weight:700;color:#93c5fd">Instalaciones Eléctricas</div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:2px">226 páginas · PDF</div></div>'
+    +'<span style="font-size:18px;color:var(--muted)">›</span></a>';
+
+  h+='<a href="instalaciones-sanitarias.pdf" target="_blank" style="display:flex;align-items:center;gap:12px;'
+    +'padding:14px;text-decoration:none;color:var(--text)">'
+    +'<div style="width:42px;height:42px;border-radius:9px;background:#052e16;border:1px solid var(--green);'
+    +'display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🚿</div>'
+    +'<div style="flex:1"><div style="font-size:14px;font-weight:700;color:#86efac">Instalaciones Sanitarias</div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:2px">334 páginas · PDF</div></div>'
+    +'<span style="font-size:18px;color:var(--muted)">›</span></a>';
+
+  h+='</div>';
+  h+='<div style="font-size:11px;color:var(--muted);text-align:center;padding:4px 14px">Toca un documento para abrirlo a pantalla completa</div>';
+
+  document.getElementById('content').innerHTML=h;
 }
+
 function goPdf(){mode='pdf';buildGrid();showPdf();}
 
 function go(k){sel=k;mode='info';buildGrid();showInfo();}
