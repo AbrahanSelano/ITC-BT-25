@@ -1,10 +1,11 @@
-const CACHE = 'itcbt25-v3';
+const CACHE = 'itcbt25-v4';
 const ASSETS = [
   './index.html',
   './manifest.json',
   './esquema-basico.png',
   './esquema-elevado.png',
-  './instalaciones-sanitarias.pdf'
+  './instalaciones-sanitarias.pdf',
+  './instalaciones-electricas.pdf'
 ];
 self.addEventListener('install', e => e.waitUntil(
   caches.open(CACHE).then(c => c.addAll(ASSETS))
