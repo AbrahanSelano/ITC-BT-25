@@ -153,15 +153,16 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 
 /* PDF button — full width */
-.b-pdf{grid-column:1/-1;background:linear-gradient(135deg,#3b0764,#1e1035);
-  border:1px solid #a855f7;border-radius:9px;padding:11px 14px;
-  cursor:pointer;display:flex;align-items:center;gap:10px;
+.b-pdf{background:linear-gradient(135deg,#3b0764,#1e1035);
+  border:1px solid #a855f7;border-radius:9px;padding:11px 8px;
+  cursor:pointer;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:3px;
   color:var(--text);-webkit-user-select:none;transition:all .12s;text-decoration:none}
 .b-pdf:active{opacity:.8}
 .b-pdf.on{border-color:#d8b4fe;background:linear-gradient(135deg,#581c87,#3b0764)}
 .b-pdf .i{font-size:20px;flex-shrink:0}
-.b-pdf .t{font-size:13px;font-weight:700;color:#d8b4fe}
-.b-pdf .s{font-size:10px;color:#7c3aed;margin-top:1px}
+.b-pdf .t{font-size:11px;font-weight:700;color:#d8b4fe;text-align:center;line-height:1.2}
+.b-pdf .s{font-size:9px;color:#7c3aed;text-align:center}
 /* CALCULADORA */
 .cs{background:var(--surface);border:1px solid var(--border);
   border-radius:var(--R);overflow:hidden;margin-bottom:10px}
@@ -288,10 +289,10 @@ function buildGrid(){
   h+='<button class="b-caida'+(mode==='caida'?' on':'')+'" onclick="goCaida()"><span class="i">📉</span><div><div class="t">Caída de tensión ΔV</div><div class="s">ITC-BT-19 · Cu/Al · Mono/Tri</div></div></button>';
   // Esquema básico
   h+='<button class="b-esc'+(mode==='basico'?' on':'')+'" onclick="goSch(\'basico\')"><span class="i">📋</span><span class="t">Esquema Básico</span><span class="s">Electrific. básica</span></button>';
-  // Esquema elevado span 2
-  h+='<button class="b-esc'+(mode==='elevado'?' on':'')+'" style="grid-column:span 2" onclick="goSch(\'elevado\')"><span class="i">📐</span><span class="t">Esquema Elevado</span><span class="s">Electrific. elevada</span></button>';
+  // Esquema elevado
+  h+='<button class="b-esc'+(mode==='elevado'?' on':'')+'" onclick="goSch(\'elevado\')"><span class="i">📐</span><span class="t">Esquema Elevado</span><span class="s">Electrific. elevada</span></button>';
     // PDF Instalaciones Sanitarias — full width
-  h+='<button class="b-pdf'+(mode==='pdf'?' on':'')+'" onclick="goPdf()"><span class="i">📄</span><div><div class="t">Instalaciones Sanitarias</div><div class="s">PDF · 334 páginas · Adobe InDesign</div></div></button>';
+  h+='<button class="b-pdf'+(mode==='pdf'?' on':'')+'" onclick="goPdf()"><span class="i">📄</span><span class="t">Inst. Sanitarias</span><span class="s">PDF · 334 págs.</span></button>';
   document.getElementById('grid').innerHTML=h;
 }
 
